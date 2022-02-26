@@ -8,14 +8,14 @@
 
   "author": "Kolism",
   "background": {
-    "scripts": ["custom-elements.min.js","static/js/background.js"]
+    "scripts": ["static/js/background.js"]
   },
   "content_scripts": [
     {
       "matches": ["<all_urls>"],
-      "js": ["static/js/content.js"],
+      "js": ["custom-elements.min.js","static/js/content.js"],
       "run_at": "document_end",
-      "exclude_matches": ["https://www.youtube.com/*"]
+      "exclude_matches": ["https://www.youtube.com/*","https://www.duckduckgo.com/*","https://redux.js.org/*"]
     }
   ],
   "permissions": [

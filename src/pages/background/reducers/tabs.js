@@ -3,6 +3,8 @@ const defaultState = {
   currentTab: {},
   tabActions: [],
 };
+/* global chrome */
+
 const settings = (state = defaultState, action) => {
   switch (action.type) {
     case "SET":
@@ -21,6 +23,14 @@ const settings = (state = defaultState, action) => {
         ...state,
         allTabs: action.allTabs,
       };
+    }
+    case "SWITCH-TAB": {
+      let tab = action.tab;
+      chrome.tabs.highlight({
+        tabs: tab.index,
+        windowId: tab.windowId,
+      });
+      chrome.windows.update(tab.windowId, { focused: true });
     }
   }
   return state;

@@ -1,3 +1,4 @@
+/* global chrome */
 import { useState, useRef, useEffect } from "react";
 import React from "react";
 import { render } from "react-dom";
@@ -66,22 +67,31 @@ export default function InjectApp(props) {
       ],
     },
   ]);
-
+  const switchTab = (tab) => {
+    store.dispatch({ type: "SWITCH-TAB", tab: tab });
+  };
+  useEffect(() => {
+    if (ninjaKeys.current) {
+      ninjaKeys.current.data = props.tabs.allTabs.map(
+        (tab) =>
+          new Object({
+            id: tab.id,
+            title: tab.title,
+            icon: iconMsg,
+            keywords: tab.url,
+            handler: () => {
+              switchTab(tab);
+            },
+          })
+      );
+    }
+  }, [props.tabs]);
   useEffect(() => {
     if (ninjaKeys.current) {
       ninjaKeys.current.data = hotkeys;
     }
   }, []);
-  return (
-    <div>
-      <ninja-keys ref={ninjaKeys} style={overlayStyle}></ninja-keys>
-      HELLLO! {props.currentTab}
-      {props.actions}
-      {props.settings.actions}
-      {props.tabs.allTabs.length}
-    </div>
-  );
-  /* } */
+  return <ninja-keys ref={ninjaKeys} style={overlayStyle}></ninja-keys>;
 }
 
 const mapStateToProps = (state) => {

@@ -30,14 +30,6 @@ chrome.tabs.onRemoved.addListener((tabId, changeInfo) => updateAlphaBar());
 
 const updateAlphaBar = () => {
   setOpenTabs();
-  /*clearActions();
-	getTabs();
-	getBookmarks();
-	var search = [
-		{title:"Search", desc:"Search for a query", type:"action", action:"search", emoji:true, emojiChar:"🔍", keycheck:false},
-		{title:"Search", desc:"Go to website", type:"action", action:"goto", emoji:true, emojiChar:"🔍", keycheck:false}
-	];
-	actions = search.concat(actions);*/
 };
 
 const setOpenTabs = () => {
