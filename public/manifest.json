@@ -15,7 +15,7 @@
       "matches": ["<all_urls>"],
       "js": ["custom-elements.min.js","static/js/content.js"],
       "run_at": "document_end",
-      "exclude_matches": ["https://www.youtube.com/*","https://www.duckduckgo.com/*","https://redux.js.org/*"]
+      "exclude_matches": ["https://github.com/*","https://www.youtube.com/*","https://www.duckduckgo.com/*","https://redux.js.org/*"]
     }
   ],
   "permissions": [
@@ -23,8 +23,7 @@
     "activeTab",
     "http://*/*",
     "https://*/*",
-    "storage",
-    "alarms"
+    "storage"
   ],
   "minimum_chrome_version": "60"
 
