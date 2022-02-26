@@ -1,4 +1,4 @@
-# AlphaBar browser command bar for tab search and web shortcuts
+# 🍢AlphaBar browser command bar for tab search and web shortcuts
 Run by `CMD+K` or `CTRL+K` hotkeys on any page, easy switch to an open tab or run a shortcut
 
 <img src="assets/demo.png">
@@ -15,3 +15,4 @@ Hit Control+K to open the command bar on any site.
   - Add more actions
   - Cleanup scrollbar styles
   - Parse keywords from tab URLS
+  - Cleanup unused artifacts from create-react-app
