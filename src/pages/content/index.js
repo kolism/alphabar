@@ -8,7 +8,7 @@ import { Provider } from "react-redux";
 import { connect } from "react-redux";
 import "ninja-keys";
 import "@material/mwc-icon";
-
+import focusLock from "dom-focus-lock";
 const store = new Store({
   portName: "COUNTING",
 });
@@ -117,6 +117,12 @@ const renderApp = () => {
     </Provider>,
     injectDOM
   );
+};
+const lockFocus = () => {
+  let search = document.getElementById("search");
+  if (search) {
+    focusLock.on(search);
+  }
 };
 store.ready().then(() => {
   renderApp();
