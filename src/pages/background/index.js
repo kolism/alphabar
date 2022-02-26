@@ -1,3 +1,4 @@
+/* global chrome */
 import store from "./store";
 
 store.subscribe(() => {

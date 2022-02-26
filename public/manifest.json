@@ -8,12 +8,12 @@
 
   "author": "Kolism",
   "background": {
-    "scripts": ["pages/background/index.js"]
+    "scripts": ["static/js/background.js"]
   },
   "content_scripts": [
     {
       "matches": ["<all_urls>"],
-      "js": ["pages/index.js"],
+      "js": ["static/js/content.js"],
       "run_at": "document_end",
       "exclude_matches": ["https://www.youtube.com/*"]
     }
@@ -26,10 +26,6 @@
     "storage",
     "alarms"
   ],
-  "minimum_chrome_version": "60",
-  "icons": {
-    "16": "assets/list.png",
-    "48": "assets/list.png",
-    "128": "assets/list128.png"
-  }
+  "minimum_chrome_version": "60"
+
 }
