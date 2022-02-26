@@ -1,17 +1,48 @@
 /* global chrome */
-import store from "./store";
+import { wrapStore } from "webext-redux";
+import { applyMiddleware, createStore } from "redux";
 
-store.subscribe(() => {
-  store.getState().bookmark.tabs.map((infoTab) => {
-    chrome.alarms.create(infoTab.tab[0].url, {
-      when: infoTab.expiry + store.getState().settings.expireDate,
+import reducer from "./reducers";
+
+import { saveState, loadState } from "./localStorage";
+let actions = [];
+
+const getTabs = () => {
+  chrome.tabs.query({}, (tabs) => {
+    tabs.forEach((tab) => {
+      tab.desc = "Chrome tab";
+      tab.keycheck = false;
+      tab.action = "switch-tab";
+      tab.type = "tab";
     });
+    actions = tabs.concat(actions);
   });
-});
+};
+console.log("actions", actions);
+const store = createStore(reducer, loadState());
 
-chrome.alarms.onAlarm.addListener(function (data) {
-  const elementExpired = store.getState().bookmark.tabs.filter((el) => {
-    return el.tab[0].url === data.name;
+store.dispatch({ type: "TAB-ACTIONS", actions: actions });
+wrapStore(store, { portName: "COUNTING" }); // make sure portName matches
+
+chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => updateAlphaBar());
+chrome.tabs.onCreated.addListener((tab) => updateAlphaBar());
+chrome.tabs.onRemoved.addListener((tabId, changeInfo) => updateAlphaBar());
+
+const updateAlphaBar = () => {
+  setOpenTabs();
+  /*clearActions();
+	getTabs();
+	getBookmarks();
+	var search = [
+		{title:"Search", desc:"Search for a query", type:"action", action:"search", emoji:true, emojiChar:"🔍", keycheck:false},
+		{title:"Search", desc:"Go to website", type:"action", action:"goto", emoji:true, emojiChar:"🔍", keycheck:false}
+	];
+	actions = search.concat(actions);*/
+};
+
+const setOpenTabs = () => {
+  chrome.tabs.query({}, (tabs) => {
+    console.log("tabs", tabs);
+    store.dispatch({ type: "ALL-TABS", allTabs: tabs });
   });
-  store.dispatch({ type: "EXPIRY", url: elementExpired[0].tab[0].url });
-});
+};

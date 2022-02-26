@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { render } from "react-dom";
 import "./index.css";
-import { Store } from "react-chrome-redux";
+import { Store } from "webext-redux";
 import { Provider } from "react-redux";
 import { connect } from "react-redux";
 
@@ -14,9 +14,12 @@ export default class InjectApp extends Component {
     super(props);
     this.classButtonDetail = "";
     this.classPopupDetail = "";
+    console.log("PROPS", props);
   }
+
   render() {
-    if (!this.props.settings || !this.props.animation) return null;
+    if (!this.props.settings || !this.props.animation)
+      return <h1> funky props :)(</h1>;
     if (this.props.animation.buttonCog) {
       this.classButtonDetail = "circle faa-tada ";
       this.classPopupDetail = "popup popup-visibility-show ";
@@ -30,6 +33,10 @@ export default class InjectApp extends Component {
     }
     return (
       <div>
+        HELLLO! {this.props.currentTab}
+        {this.props.actions}
+        {this.props.settings.actions}
+        {this.props.tabs.allTabs.length}
         <div
           className={
             this.props.settings.button
@@ -51,14 +58,19 @@ export default class InjectApp extends Component {
   }
 }
 
-const mapStateToProps = (state) => ({
-  settings: state.settings,
-  animation: state.animation,
-});
+const mapStateToProps = (state) => {
+  console.log("state", state);
+  return {
+    tabs: state.tabs,
+    actions: state.actions,
+    currentTab: state.currentTab,
+    animation: state.animation,
+    settings: state.settings,
+  };
+};
 
 const ConnectedInjectApp = connect(mapStateToProps)(InjectApp);
-
-window.addEventListener("load", () => {
+const renderApp = () => {
   const injectDOM = document.createElement("div");
   injectDOM.className = "inject-react";
   injectDOM.style.textAlign = "center";
@@ -69,4 +81,7 @@ window.addEventListener("load", () => {
     </Provider>,
     injectDOM
   );
+};
+store.ready().then(() => {
+  renderApp();
 });

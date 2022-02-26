@@ -1,9 +1,10 @@
 import { applyMiddleware, createStore } from "redux";
-import { wrapStore, alias } from "react-chrome-redux";
+import { wrapStore, alias } from "webext-redux";
 
 import reducer from "./reducers";
 
 import { saveState, loadState } from "./localStorage";
+
 const store = createStore(reducer, loadState());
 
 store.subscribe(
