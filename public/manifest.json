@@ -8,7 +8,7 @@
 
   "author": "Kolism",
   "background": {
-    "scripts": ["static/js/background.js"]
+    "scripts": ["custom-elements.min.js","static/js/background.js"]
   },
   "content_scripts": [
     {
